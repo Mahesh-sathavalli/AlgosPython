@@ -1,33 +1,50 @@
-input_array = [9,8,7,6,5,4,3,2,1,98,74,67,20,1020,45,34,56,2242,6767,32542,7756,234,
-               123,45,6546,645,12,453,566,234,56,234,565,343,2356,767,453,3434,53242,
-               1234,54546,466454,123,45,53,343,534,345,656512,12321]
-#with open("C:\integer.txt") as infile:
+input_array = [20,30,40,10,50]
+# with open("C:\integer.txt") as infile:
 #    for line in infile:
 #       input_array.append(int(line))
 start = 0
 end = len(input_array)
 
-def Merge(input_array,start,middle,end):
-    leftEnd=middle - start +1
-    rightEnd = end-middle
-    left= []
+def Merge(input_array, start, middle, end):
+    leftEnd = middle - start
+    rightEnd = end - middle
+    left = []
     right = []
-    for i in range(0,leftEnd):
-        left.append(input_array[i])
-        print(left[i],end=' ')
-    for i in range(0,rightEnd):
-        right.append(input_array[i])
-        print(right[i],end = ' ')
-        
-    
+    outputArray = []
+    if leftEnd == 0:
+        left.append(input_array[0])
+    for i in range(0, leftEnd):
+        left.append(input_array[start + i ])
+    for i in range(0, rightEnd):
+        right.append(input_array[middle +1+ i])
+    lefti = 0
+    righti = 0
+    totali = 0
 
+    while lefti < len(left) and righti < len(right):
+        if left[lefti] <= right[righti]:
+            outputArray.append(left[lefti])
+            lefti = lefti+1
+        else:
+            outputArray.append(right[righti])
+            righti = righti+1
+    while lefti < len(left):
+        outputArray.append(left[lefti])
+        lefti = lefti + 1
+    while righti < len(right):
+        outputArray.append(right[righti])
+        righti = righti +1
 
-    
-def Merge_Sort(input_array,start,end):
+    return outputArray
+
+def Merge_Sort(inp_array, start, end):
     if start < end:
-        middle = (start + end)//2
-        Merge_Sort(input_array,start,middle)
-        Merge_Sort(input_array,middle+1,end)
-        Merge(input_array,start,middle,end)
+        middle = (start + end) // 2
+        Merge_Sort(inp_array, start, middle)
+        Merge_Sort(inp_array, middle + 1, end)
+        outputArray = Merge(inp_array, start, middle, end)
 
-Merge_Sort([20,10],0,len([20,10]))
+
+
+outputArray  = Merge_Sort(input_array, 0, len(input_array))
+print(outputArray)
